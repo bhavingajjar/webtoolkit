@@ -1,4 +1,4 @@
-/** Shared tool metadata for UI + SEO pages */
+/** Shared site + tool metadata (single source of truth for UI, SEO, and page generation). */
 
 export const SITE = {
   name: 'WebToolkit',
@@ -116,3 +116,29 @@ export const MODE_SEO = {
     description: 'Create glitchy Zalgo text online. Copy creepy combining-mark text instantly.',
   },
 };
+
+const BY_SLUG = new Map(CONVERT_MODES.map((mode) => [mode.slug, mode]));
+const BY_ID = new Map(CONVERT_MODES.map((mode) => [mode.id, mode]));
+
+export function getModeBySlug(slug) {
+  return BY_SLUG.get(slug) || null;
+}
+
+export function getModeById(id) {
+  return BY_ID.get(id) || null;
+}
+
+export function seoForMode(modeId) {
+  return (
+    MODE_SEO[modeId] || {
+      title: `${SITE.name} — Free Online Text Case Converter`,
+      description: SITE.description,
+    }
+  );
+}
+
+export function toolNavLabel(modeId) {
+  const seo = MODE_SEO[modeId];
+  if (!seo) return modeId;
+  return seo.title.replace(' — WebToolkit', '');
+}

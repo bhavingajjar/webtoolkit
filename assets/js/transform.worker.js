@@ -1,4 +1,4 @@
-import { applyTransform, countStats } from './converters.js';
+import { applyTransform, countStats } from './modules/converters.js';
 
 self.onmessage = (event) => {
   const { id, mode, text } = event.data || {};
