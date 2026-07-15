@@ -1,202 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="WebToolkit — free, fast, browser-based tools for text, code, encoding, and generators." />
-  <title>WebToolkit</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg-deep: #0c1a1f;
-      --bg-mid: #14303a;
-      --accent: #3ecf8e;
-      --accent-soft: rgba(62, 207, 142, 0.18);
-      --ink: #f4f7f5;
-      --muted: #a8b8b2;
-      --font-display: "Fraunces", Georgia, serif;
-      --font-body: "Outfit", sans-serif;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      min-height: 100%;
-    }
-
-    body {
-      font-family: var(--font-body);
-      color: var(--ink);
-      background:
-        radial-gradient(ellipse 90% 70% at 15% 20%, rgba(62, 207, 142, 0.22), transparent 55%),
-        radial-gradient(ellipse 70% 50% at 85% 75%, rgba(45, 120, 140, 0.35), transparent 50%),
-        linear-gradient(165deg, var(--bg-deep) 0%, var(--bg-mid) 55%, #0a2229 100%);
-      background-attachment: fixed;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem 1.25rem;
-      overflow-x: hidden;
-    }
-
-    .stage {
-      width: min(40rem, 100%);
-      text-align: center;
-      animation: rise 0.9s ease-out both;
-    }
-
-    .brand {
-      font-family: var(--font-display);
-      font-size: clamp(2.75rem, 10vw, 5rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-      margin-bottom: 1rem;
-      background: linear-gradient(120deg, #ffffff 20%, var(--accent) 90%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: glow-in 1.2s ease-out 0.2s both;
-    }
-
-    .headline {
-      font-family: var(--font-display);
-      font-size: clamp(1.15rem, 3.5vw, 1.55rem);
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 0.75rem;
-      animation: rise 0.9s ease-out 0.15s both;
-    }
-
-    .lede {
-      font-size: 1.05rem;
-      line-height: 1.55;
-      color: var(--muted);
-      max-width: 28rem;
-      margin: 0 auto 2rem;
-      animation: rise 0.9s ease-out 0.3s both;
-    }
-
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--bg-deep);
-      background: var(--accent);
-      text-decoration: none;
-      padding: 0.85rem 1.5rem;
-      border-radius: 0.4rem;
-      border: none;
-      cursor: default;
-      box-shadow: 0 0 0 0 var(--accent-soft);
-      animation: rise 0.9s ease-out 0.45s both, pulse 2.8s ease-in-out 1.2s infinite;
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .cta:hover {
-      transform: translateY(-2px);
-      background: #4fdb9c;
-    }
-
-    .orbit {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -1;
-    }
-
-    .orbit::before,
-    .orbit::after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid rgba(62, 207, 142, 0.12);
-    }
-
-    .orbit::before {
-      width: min(70vw, 28rem);
-      height: min(70vw, 28rem);
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      animation: spin 48s linear infinite;
-    }
-
-    .orbit::after {
-      width: min(95vw, 42rem);
-      height: min(95vw, 42rem);
-      top: 50%;
-      left: 50%;
-      translate: -50% -50%;
-      animation: spin 72s linear infinite reverse;
-    }
-
-    @keyframes rise {
-      from {
-        opacity: 0;
-        transform: translateY(1.25rem);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @keyframes glow-in {
-      from {
-        filter: blur(6px);
-        opacity: 0;
-      }
-      to {
-        filter: blur(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 0 0 var(--accent-soft);
-      }
-      50% {
-        box-shadow: 0 0 0 12px transparent;
-      }
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="orbit" aria-hidden="true"></div>
-  <main class="stage">
-    <h1 class="brand">WebToolkit</h1>
-    <p class="headline">Hello — tools that stay in your browser.</p>
-    <p class="lede">
-      Free, fast utilities for text, code formatting, encoding, fonts, and random generators. No accounts. No uploads.
-    </p>
-    <span class="cta" role="status">Coming soon</span>
-  </main>
-</body>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="WebToolkit — free browser-based text case converter and utilities. Convert uppercase, lowercase, title case, and more. No uploads."
+    />
+    <link rel="canonical" href="https://bhavingajjar.github.io/webtoolkit/" />
+    <link rel="icon" type="image/png" href="/webtoolkit/assets/logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Geist:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=block"
+      rel="stylesheet"
+    />
+    <title>WebToolkit — Free Online Text Case Converter</title>
+  </head>
+  <body class="bg-background text-on-background min-h-screen">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
