@@ -22,20 +22,15 @@ Open the local Vite URL (default `http://localhost:5173/webtoolkit/`).
 ## Build
 
 ```bash
+npm install
 npm run build
-npm run preview
 ```
 
-Output lands in `dist/` (includes `404.html` SPA fallback for GitHub Pages).
+Output is written to [`dist/`](dist/) (committed so you can point hosting or GitHub Pages at it).  
+`npm run build` refreshes `dist/` after source changes.
 
 ## Deploy
 
-Push to `main`. The GitHub Actions workflow builds and publishes `dist/` to Pages.
+**Option A — GitHub Actions (recommended):** merge to `main`, enable **Settings → Pages → Source: GitHub Actions**. The workflow publishes the *contents* of `dist/` to `https://bhavingajjar.github.io/webtoolkit/` (the URL has no `/dist` segment).
 
-In repo **Settings → Pages**, set Source to **GitHub Actions**.
-
-## AdSense
-
-Edit `src/config/ads.js` and set `ADSENSE_CLIENT` (and optional slot ids). Until set, glass ad placeholders render so layout matches the design.
-
-Also update `public/ads.txt` with your publisher line when approved.
+**Option B — browse committed `dist/` on the branch:** the folder is in the repo for inspection and manual use. Opening `/webtoolkit/dist/` on Pages only works if the whole branch is served from root; asset `base` is `/webtoolkit/` for the Actions deploy, so prefer Option A for production.
