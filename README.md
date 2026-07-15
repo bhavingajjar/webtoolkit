@@ -1,36 +1,32 @@
 # WebToolkit
 
-Free, browser-based text tools (case converters, unicode stylers, translators).  
+Free browser-based text tools (case converters, unicode stylers, translators).  
 Live: https://bhavingajjar.github.io/webtoolkit/
 
 ## Stack
 
-- Vite + React
-- Tailwind CSS v4
-- Client-only (GitHub Pages) — no backend
-- Stitch “Lumina Text System” design (see `design/stitch/`)
+Plain **HTML + CSS + JavaScript** (ES modules). No npm build. No React. No Vite.
 
-## Develop
+Design reference: Stitch **Lumina Text System** in [`design/stitch/`](design/stitch/).
 
-```bash
-npm install
-npm run dev
-```
-
-Open the local Vite URL (default `http://localhost:5173/webtoolkit/`).
-
-## Build
+## Run locally
 
 ```bash
-npm install
-npm run build
+python3 -m http.server 8000
 ```
 
-Output is written to [`dist/`](dist/) (committed so you can point hosting or GitHub Pages at it).  
-`npm run build` refreshes `dist/` after source changes.
+Open http://localhost:8000/
+
+## Regenerate SEO pages (optional)
+
+```bash
+python3 scripts/generate-pages.py
+```
 
 ## Deploy
 
-**Option A — GitHub Actions (recommended):** merge to `main`, enable **Settings → Pages → Source: GitHub Actions**. The workflow publishes the *contents* of `dist/` to `https://bhavingajjar.github.io/webtoolkit/` (the URL has no `/dist` segment).
+Push to `main`. GitHub Pages should serve from the **branch root** (Settings → Pages → Deploy from branch → `/` root).
 
-**Option B — browse committed `dist/` on the branch:** the folder is in the repo for inspection and manual use. Opening `/webtoolkit/dist/` on Pages only works if the whole branch is served from root; asset `base` is `/webtoolkit/` for the Actions deploy, so prefer Option A for production.
+## AdSense
+
+Edit `assets/js/config.js` and set `ADSENSE_CLIENT` when ready. Also update `ads.txt`.
