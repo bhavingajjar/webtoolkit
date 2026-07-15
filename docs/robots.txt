@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /webtoolkit/
-
-Sitemap: https://bhavingajjar.github.io/webtoolkit/sitemap.xml

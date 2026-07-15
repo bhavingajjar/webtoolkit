@@ -1,10 +1,12 @@
 # WebToolkit
 
-Static, single-file landing page (`index.html`) deployed to GitHub Pages. Plain HTML5 + inline CSS, no JavaScript, no build step, no package manager, and no backend/database. The only runtime external dependency is Google Fonts loaded from a CDN (the page falls back to system fonts when offline).
+Static GitHub Pages site: plain HTML + CSS + vanilla JavaScript (ES modules). No npm, no React/Vite build, no backend.
 
 ## Cursor Cloud specific instructions
 
-- There is nothing to install or build. The "app" is the static `index.html`.
-- To run it in development, serve the repo root as static files, e.g. `python3 -m http.server 8000` from `/workspace`, then open `http://localhost:8000/`.
-- There are no automated tests, linters, or build commands configured in this repo.
-- Google Fonts are fetched from a CDN at runtime; the page still renders with fallback fonts (`Georgia`/`serif`, `sans-serif`) if there is no network access.
+- Nothing to install or build. Serve the repo root as static files.
+- Local preview: `python3 -m http.server 8000` from `/workspace`, then open `http://localhost:8000/`.
+- Optional page regen: `python3 scripts/generate-pages.py`
+- No automated tests or linters are configured.
+- Fonts and Material Symbols load from Google Fonts CDN at runtime (system fallbacks apply offline).
+- AdSense client id (optional) lives in `assets/js/config.js` as `ADSENSE_CLIENT`.
