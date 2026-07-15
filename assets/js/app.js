@@ -221,7 +221,19 @@ function bindLinks() {
   });
 }
 
+function registerServiceWorker() {
+  if (!('serviceWorker' in navigator)) return;
+  const assetBase = root.dataset.assetBase || './assets/';
+  const swUrl = new URL('../sw.js', new URL(assetBase, window.location.href)).href;
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register(swUrl).catch(() => {
+      /* Registration can fail on file:// or restricted hosts. */
+    });
+  });
+}
+
 initTheme();
 loadAdsense();
 bindLinks();
 bindConverter();
+registerServiceWorker();
