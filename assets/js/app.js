@@ -5,9 +5,7 @@ const root = document.documentElement;
 const pageBase = root.dataset.pageBase || './';
 const initialMode = root.dataset.mode || 'sentence';
 
-const HEAVY = new Set(['zalgo', 'bold', 'italic', 'wide', 'wingdings', 'morse', 'binary']);
-const THRESHOLD = 8000;
-
+/** Offload transforms (upper/lower/etc.) to a Web Worker so large pastes stay responsive. */
 let worker;
 let reqId = 0;
 const pending = new Map();
@@ -30,9 +28,8 @@ function getWorker() {
 }
 
 async function transform(mode, text) {
-  const useWorker = HEAVY.has(mode) || (text?.length || 0) > THRESHOLD;
   const w = getWorker();
-  if (!useWorker || !w) return applyTransform(mode, text);
+  if (!w) return applyTransform(mode, text);
   const id = ++reqId;
   return new Promise((resolve, reject) => {
     pending.set(id, { resolve, reject });
@@ -221,19 +218,21 @@ function bindLinks() {
   });
 }
 
-function registerServiceWorker() {
+/** Drop any previously registered caching service workers (not used for conversion). */
+function unregisterLegacyServiceWorkers() {
   if (!('serviceWorker' in navigator)) return;
-  const assetBase = root.dataset.assetBase || './assets/';
-  const swUrl = new URL('../sw.js', new URL(assetBase, window.location.href)).href;
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(swUrl).catch(() => {
-      /* Registration can fail on file:// or restricted hosts. */
-    });
+  navigator.serviceWorker.getRegistrations().then((regs) => {
+    regs.forEach((reg) => reg.unregister());
   });
+  if (typeof caches !== 'undefined') {
+    caches.keys().then((keys) => {
+      keys.filter((k) => k.startsWith('webtoolkit-')).forEach((k) => caches.delete(k));
+    });
+  }
 }
 
 initTheme();
 loadAdsense();
 bindLinks();
 bindConverter();
-registerServiceWorker();
+unregisterLegacyServiceWorkers();
